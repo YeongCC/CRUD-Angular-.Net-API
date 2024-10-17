@@ -1,0 +1,87 @@
+<div class="container mt-5">
+  <h2 class="mb-4">{{ isEditMode ? 'Edit Customer Profile' : 'Add Customer Profile' }}</h2>
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="firstName" class="form-label">First Name</label>
+        <input formControlName="firstName" id="firstName" type="text" class="form-control" />
+        <div *ngIf="customerForm.get('firstName')?.invalid && customerForm.get('firstName')?.touched" class="text-danger">
+          First Name is required and must be less than 50 characters.
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input formControlName="lastName" id="lastName" type="text" class="form-control" />
+        <div *ngIf="customerForm.get('lastName')?.invalid && customerForm.get('lastName')?.touched" class="text-danger">
+          Last Name is required and must be less than 50 characters.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <input formControlName="email" id="email" type="email" class="form-control" />
+        <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched" class="text-danger">
+          Valid email is required.
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="phoneNumber" class="form-label">Phone Number</label>
+        <input formControlName="phoneNumber" id="phoneNumber" type="text" class="form-control" />
+        <div *ngIf="customerForm.get('phoneNumber')?.invalid && customerForm.get('phoneNumber')?.touched" class="text-danger">
+          Phone Number is required (10 digits).
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="dateOfBirth" class="form-label">Date of Birth</label>
+        <input formControlName="dateOfBirth" id="dateOfBirth" type="date" class="form-control" />
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-start">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="customerForm.invalid">
+        {{ isEditMode ? 'Update Customer' : 'Add Customer' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()" *ngIf="isEditMode">Cancel</button>
+    </div>
+  </form>
+</div>
+
+
+
+<hr class="my-4">
+
+<div class="container">
+  <h2 class="mb-4">Customer Profiles</h2>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Date of Birth</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let profile of customerProfiles">
+        <td>{{ profile.firstName }}</td>
+        <td>{{ profile.lastName }}</td>
+        <td>{{ profile.email }}</td>
+        <td>{{ profile.phoneNumber }}</td>
+        <td>{{ profile.dateOfBirth | date }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="editCustomerProfile(profile)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteCustomerProfile(profile.customerID!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
