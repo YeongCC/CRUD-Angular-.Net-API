@@ -1,4 +1,4 @@
-# Customer Profile Management Project
+# CRUD-Angular-.Net-API
 
 ## Project Overview
 This project consists of two parts:
